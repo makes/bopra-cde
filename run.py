@@ -7,7 +7,7 @@ cases = range(1, 58+1)
 _ = subprocess.run(['pwsh', 'fix_kernelspec.ps1'])
 
 with open('cde.csv', 'w') as cde_csv:
-    cde_csv.write('Case ID;CDE\n')
+    cde_csv.write('Case ID,CDE,ratio,drop\n')
 
 for case in cases:
     outname = str(case).zfill(5)
