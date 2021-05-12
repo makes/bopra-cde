@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
 from datetime import timedelta
+from datetime import datetime
 
 # Loads NIRS data
-def LoadCSV(filename, discard_by_status=False):
+def load_raw_csv(filename):
     df = pd.read_csv(filename,
                      sep = ',',
                      skiprows = 5,
@@ -28,7 +29,24 @@ def LoadCSV(filename, discard_by_status=False):
     df['Time'] = timeindex
     df.set_index('Time', inplace=True)
 
-    if discard_by_status == True:
-        df['rSO2'] = np.where(df['Bad_rSO2_auto'] == 1, np.nan, df['rSO2'])
+    return df
+
+def load_csv(filename):
+    df = pd.read_csv(filename,
+                     sep = ';',
+                     na_values = ['--', ' '])
+
+    df.rename(columns={'PoorSignalQuality': 'Bad_rSO2_auto'}, inplace=True)
+
+    starttime = df['Time'][0]
+    timeindex = []
+    time = pd.to_datetime(starttime)
+    for _ in range(len(df.index)):
+        timeindex.append(time)
+        time = time + timedelta(seconds=1)
+
+    df['Time'] = timeindex
+    df.set_index('Time', inplace=True)
 
     return df
+

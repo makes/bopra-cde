@@ -1,0 +1,37 @@
+# Configuration file for BOPRA CDE analysis
+
+name = "testing" # name of run configuration
+
+cde_duration = 300    # seconds
+cde_depth = 10        # percentage points
+interpolation = "pad" # method: "pad" or "linear"
+
+[output]
+logdir = "./logs"
+csvdir = "./output"
+imagedir = "./images"
+
+csv_sep = ";"
+csv_decimal_sep = ","
+
+[input]
+amend_discard_col = "HuonoSignaali2"
+
+[[bases]]
+name = "TB_10"
+
+data_dir = "./data/TB_10"
+amend_dir = "./amend/TB_10"
+
+[[bases]]
+name = "TB_20"
+
+data_dir = "./data/TB_20"
+amend_dir = "./amend/TB_20"
+
+[[bases]]
+name = "TB_10p"
+
+data_dir = ""
+amend_dir = "./amend/TB_10p"
+

@@ -1,0 +1,67 @@
+# Configuration file for BOPRA CDE analysis
+
+name = "main" # name of run configuration
+
+cde_duration = 300    # seconds
+cde_depth = 10        # percentage points
+interpolation = "pad" # method: "pad" or "linear"
+
+[output]
+logdir = "~/Spaces/BOPRA/Datat/CDE"
+csvdir = "~/Spaces/BOPRA/Datat/CDE"
+imagedir = "~/Spaces/BOPRA/Datat/CDE/images"
+
+csv_sep = ";"
+csv_decimal_sep = ","
+
+[input]
+amend_discard_col = "HuonoSignaali2"
+
+[[bases]]
+name = "FH_10"
+
+data_dir = "~/Spaces/BOPRA-data/FH_10/NIRS_raakadata"
+amend_dir = "~/Spaces/BOPRA/Datat/NIRS_arvio_TTo/FH_10"
+
+[[bases]]
+name = "FH_20"
+
+data_dir = "~/Spaces/BOPRA-data/FH_20/NIRS_raakadata"
+amend_dir = "~/Spaces/BOPRA/Datat/NIRS_arvio_TTo/FH_20"
+
+[[bases]]
+name = "FH_30"
+
+data_dir = "~/Spaces/BOPRA-data/FH_30/NIRS_raakadata"
+amend_dir = "~/Spaces/BOPRA/Datat/NIRS_arvio_TTo/FH_30"
+
+[[bases]]
+name = "FH_50"
+
+data_dir = "~/Spaces/BOPRA-data/FH_50/NIRS_raakadata"
+amend_dir = "~/Spaces/BOPRA/Datat/NIRS_arvio_TTo/FH_50"
+
+[[bases]]
+name = "FH_51"
+
+data_dir = "~/Spaces/BOPRA-data/FH_51/NIRS_raakadata"
+amend_dir = "~/Spaces/BOPRA/Datat/NIRS_arvio_TTo/FH_51"
+
+[[bases]]
+name = "FH_60"
+
+data_dir = "~/Spaces/BOPRA-data/FH_60/NIRS_raakadata"
+amend_dir = "~/Spaces/BOPRA/Datat/NIRS_arvio_TTo/FH_60"
+
+[[bases]]
+name = "FH_10p" # pilot study
+
+data_dir = ""
+amend_dir = "~/Spaces/BOPRA/Datat/CDE/pilot_data/FH_10"
+
+[[bases]]
+name = "FH_50p" # pilot study
+
+data_dir = ""
+amend_dir = "~/Spaces/BOPRA/Datat/CDE/pilot_data/FH_50"
+

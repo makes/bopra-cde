@@ -1,7 +1,10 @@
+.DS_Store
 .vscode/
 __pycache__/
 env/*
 data/*
 amend/*
+images/*
 output/*
+logs/*
 cde.csv
