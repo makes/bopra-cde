@@ -106,7 +106,9 @@ class Dataset:
             log(f"Error: data not loaded, can't aggregate id {self.case_id}")
             return
         if len(self.nirs_data.index) != len(self.amend.index):
-            log(f'Error: data length mismatch: case {self.case_id}')
+            log(f'Error: data length mismatch: case {self.case_id}:')
+            msg = f'raw: {len(self.nirs_data.index)}, '
+            log(msg + f'amend: {len(self.amend.index)}')
             return
         self.data = pd.DataFrame()
         discard_col = DISCARD_COL
