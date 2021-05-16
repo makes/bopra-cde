@@ -177,6 +177,7 @@ class Analysis:
         self.baseline = df['rSO2'][ts:tm].mean()
         self.cde_threshold = self.baseline - CDE_DEPTH
         if self.baseline is np.nan:
+            self.baseline = None
             self.comment = "Undefined baseline rSO2"
             log(f'{self.dataset.case_id}: Unable to analyze - ' + self.comment)
             if ARGS.generate_images == True:
@@ -208,13 +209,14 @@ class Analysis:
         ax.set_ylabel('rSO2', color='navy')
         ax.plot(df.index, df['rSO2'], color='navy', label='rSO2')
         ax.tick_params(axis='y', labelcolor='navy')
-        plt.title(f'Case {case_id}')
-        sta = df.index.get_loc(df['rSO2'].first_valid_index())
+        title = f'Case {case_id}'
         if 'mark' in self.timestamps and self.baseline is not None:
-            mrk = (df.index.get_loc(self.timestamps['mark'])-sta) / (df.index.get_loc(self.timestamps['end'])-sta)
-            ax.axhline(y=self.baseline, linewidth=2, linestyle='--', xmax=mrk, color='darkgreen', dash_capstyle='butt')
-            ax.axhline(y=self.cde_threshold, linewidth=2, linestyle='--', xmin=mrk, color='darkred', dash_capstyle='butt')
+            title += f' baseline={self.baseline:.1f}'
+            ax.hlines(self.baseline, xmin=self.timestamps['start'], xmax=self.timestamps['mark'], color='darkgreen', linestyle='--', linewidth=2)
+            title += f' threshold={self.cde_threshold:.1f}'
+            ax.hlines(self.cde_threshold, xmin=self.timestamps['mark'], xmax=self.timestamps['end'], color='darkred', linestyle='--', linewidth=2)
             ax.axvline(self.timestamps['mark'], linestyle='--', linewidth=3)
+        plt.title(title)
         if cd_ranges is not None:
             for r in cd_ranges:
                 ax.axvspan(r[0], r[1], alpha=0.3, color='green', lw=0)
@@ -250,7 +252,7 @@ class Analysis:
         except IndexError:
             self.timestamps['mark'] = None
             raise AssertionError("No 'Mark' found.")
-        self.timestamps['start'] = df.index[0]
+        self.timestamps['start'] = df['rSO2'].first_valid_index()
         self.timestamps['end'] = df.index[-1]
         return (self.timestamps['start'],
                 self.timestamps['mark'],
