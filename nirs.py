@@ -38,12 +38,15 @@ def load_csv(filename):
 
     df.rename(columns={'PoorSignalQuality': 'Bad_rSO2_auto'}, inplace=True)
 
-    starttime = df['Time'][0]
     timeindex = []
-    time = pd.to_datetime(starttime)
-    for _ in range(len(df.index)):
-        timeindex.append(time)
-        time = time + timedelta(seconds=1)
+    time = pd.to_datetime('1970-01-01T00:00:00')
+    prev_delta = pd.Timedelta(df['Time'][0])
+    for i, t in df['Time'].items():
+        delta = pd.Timedelta(t)
+        if prev_delta > delta: # midnight rollover
+            time += pd.Timedelta("1 days")
+        prev_delta = pd.Timedelta(t)
+        timeindex.append(time + delta)
 
     df['Time'] = timeindex
     df.set_index('Time', inplace=True)
